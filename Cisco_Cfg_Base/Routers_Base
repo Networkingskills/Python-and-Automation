@@ -1,0 +1,27 @@
+hostname XXX
+username admin privilege 15 secret XXX
+!
+inter gig0/0
+ip add 10.XX.XX.XX 255.255.0.0
+no shut
+!
+vrf definition OOB-MGMT
+ description Out-Of-Band-Access
+ !
+ address-family ipv4
+ exit-address-family
+!
+ip route vrf OOB-MGMT 0.0.0.0 0.0.0.0 10.XX.XX.1
+!
+no ip domain-lookup
+ip domain name networkautomation.com
+crypto key generate rsa mod 1024
+line vty 0 4
+ login local
+ transport input all
+!
+no banner exec ^C
+no banner incoming ^C
+no banner login ^C
+!
+
